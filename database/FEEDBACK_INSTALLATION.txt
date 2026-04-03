@@ -1,0 +1,62 @@
+-- Installation Instructions for Feedback Feature
+-- ===============================================
+
+-- STEP 1: Run this SQL query in your phpMyAdmin or MySQL console
+-- ---------------------------------------------------------------
+
+-- Navigate to: http://localhost/phpmyadmin
+-- Select your database: placement
+-- Click on the SQL tab
+-- Copy and paste the following SQL query:
+
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `admin_response` text DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `response_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
+
+-- ===============================================
+-- STEP 2: Verify the installation
+-- ---------------------------------------------------------------
+-- After running the above SQL, verify that:
+-- 1. The 'feedback' table exists in your database
+-- 2. The table has 7 columns: id, id_user, subject, message, admin_response, created_at, response_date
+-- 3. The foreign key constraint is properly set up
+
+-- ===============================================
+-- STEP 3: Access the feedback feature
+-- ---------------------------------------------------------------
+-- For Students:
+--   - Login as a student
+--   - Navigate to: http://localhost/placement/user/feedback.php
+--   - Or click on "Feedback" in the sidebar menu
+
+-- For Admin:
+--   - Login as admin
+--   - Navigate to: http://localhost/placement/admin/feedback.php
+--   - Or click on "Feedback" in the sidebar menu or navigation bar
+
+-- ===============================================
+-- Features Available:
+-- ---------------------------------------------------------------
+-- Students can:
+--   - Submit new feedback with subject and message
+--   - View their feedback history
+--   - See admin responses to their feedback
+
+-- Admin can:
+--   - View all feedback from students
+--   - Filter feedback by status (All, Pending, Responded)
+--   - Respond to student feedback
+--   - Update existing responses
+--   - Delete feedback entries
+--   - See statistics (Total, Pending, Responded)
